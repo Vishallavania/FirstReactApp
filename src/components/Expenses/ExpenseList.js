@@ -13,18 +13,22 @@ function ExpenseList(props) {
         return ex.date.getFullYear().toString() === filteredYear
     });
 
+    let expenseContent = <div className="expense-item">No Expenses Found</div>;
+    if(expenseList.length > 0)
+    {
+        expenseContent = expenseList.map((e)=> 
+        (<ExpenseItem 
+            key={e.id}
+            title={e.title} 
+            amount={e.amount} 
+            date={e.date}>
+        </ExpenseItem>));
+    }
     return (
         <div>
             <Card className="expenses">
             <ExpensesFilter selected={filteredYear} onExpenseFilterChanges={expenseFilterChangesHandler}/>
-                { expenseList.map((e)=> 
-                    (<ExpenseItem 
-                        key={e.id}
-                        title={e.title} 
-                        amount={e.amount} 
-                        date={e.date}>
-                    </ExpenseItem>))
-                }          
+            {expenseContent}         
             </Card>
         </div>
     );
